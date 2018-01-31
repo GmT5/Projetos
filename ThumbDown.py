@@ -16,15 +16,18 @@ print(art)
 
 class Downloader(object):
 
+# --- Requisição ao link e instanciação do obj BeautifulSoup --- #
     def __init__(self, url, file_name):
         self.file_name = file_name
         self.page = requests.get(url)
         self.soup = BeautifulSoup(self.page.content, 'html.parser')
-    
+
+# --- Encontra a Thumbnail -- #
     def find_img(self):
         self.link = self.soup.find(itemprop="thumbnailUrl")
         self.imglink = self.link['href']
 
+# --- Baixa a imagem -- #
     def create_img(self):
         self.thumbnail = requests.get(self.imglink)
         self.arq = open('{}.jpg'.format(self.file_name), 'wb')
